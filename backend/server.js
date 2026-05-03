@@ -20,8 +20,11 @@ const studentRoutes = require('./routes/student');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
+// ✅ FIX: Keep ONLY one PORT definition (Render compatible)
+const PORT = process.env.PORT || 5002;
+
+// ─── TRUST PROXY SETTING ───────────────────────────────────────────────────
 const trustProxySetting = (() => {
   const value = process.env.TRUST_PROXY;
 
@@ -61,6 +64,7 @@ const allowedOrigins = [
   'http://localhost:3001',
 ];
 
+// ✅ Your CORS is already correct (no need to change)
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) callback(null, true);
