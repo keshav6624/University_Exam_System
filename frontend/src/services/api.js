@@ -2,11 +2,13 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 
 const getApiBaseUrl = () => {
-  const envBase =
-    (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL)?.trim() ||
-    process.env.REACT_APP_API_URL?.trim();
+  const envBase = import.meta.env.VITE_API_URL?.trim();
+
   if (!envBase) return '/api';
-  return /\/api\/?$/i.test(envBase) ? envBase : `${envBase.replace(/\/$/, '')}/api`;
+
+  return /\/api\/?$/i.test(envBase)
+    ? envBase
+    : `${envBase.replace(/\/$/, '')}/api`;
 };
 
 const api = axios.create({
