@@ -10,7 +10,7 @@
     "db:seed": "node utils/seedData.js"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.38.5",
+    "@supabase/supabase-js": "^2.105.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.6",
     "csv-parser": "^3.0.0",
