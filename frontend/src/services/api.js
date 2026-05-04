@@ -104,3 +104,8 @@ export const studentAPI = {
   getResults: (params) => api.get('/student/results', { params }),
   getResult: (id) => api.get(`/student/results/${id}`),
 };
+
+// AI Assistant
+export const chatbotAPI = {
+  sendMessage: (data) => api.post('/chatbot/message', data),
+};

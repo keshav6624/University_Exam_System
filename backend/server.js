@@ -14,6 +14,7 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 
 const authRoutes = require('./routes/auth');
+const chatbotRoutes = require('./routes/chatbot');
 const adminRoutes = require('./routes/admin');
 const teacherRoutes = require('./routes/teacher');
 const studentRoutes = require('./routes/student');
@@ -103,6 +104,7 @@ app.get('/health', (req, res) => {
 
 // ─── API ROUTES ─────────────────────────────────────────────────────────────
 app.use('/api/auth', authLimiter, authRoutes);
+app.use('/api/chatbot', authLimiter, chatbotRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/teacher', teacherRoutes);
 app.use('/api/student', studentRoutes);
@@ -115,6 +117,7 @@ app.get('/api', (req, res) => {
     version: '1.0.0',
     endpoints: {
       auth: '/api/auth',
+      chatbot: '/api/chatbot',
       admin: '/api/admin',
       teacher: '/api/teacher',
       student: '/api/student',

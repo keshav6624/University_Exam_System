@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import { Toaster } from 'react-hot-toast';
+import ChatbotWidget from './ChatbotWidget';
 
 export default function Layout({ children }) {
   return (
@@ -11,6 +12,7 @@ export default function Layout({ children }) {
           {children}
         </div>
       </main>
+      <ChatbotWidget />
       <Toaster
         position="top-right"
         toastOptions={{

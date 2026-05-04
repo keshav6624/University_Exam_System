@@ -30,6 +30,40 @@ Get current authenticated user profile. **Requires auth.**
 
 ---
 
+## AI Assistant (`/api/chatbot`)
+
+### POST `/chatbot/message`
+Send a question to the in-app assistant. **Requires auth.**
+
+**Request:**
+```json
+{
+  "message": "How do I start an exam?",
+  "history": [
+    { "role": "user", "content": "Hi" },
+    { "role": "assistant", "content": "Hello!" }
+  ]
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "reply": "Students can open the Exams page...",
+  "source": "openai",
+  "suggestions": ["How do I log in?", "How do I start an exam?"]
+}
+```
+
+**Optional environment variables:**
+```bash
+OPENAI_API_KEY=your_key_here
+OPENAI_MODEL=gpt-4o-mini
+```
+
+---
+
 ## Admin Portal (`/api/admin`) — Role: admin
 
 ### GET `/admin/dashboard`
