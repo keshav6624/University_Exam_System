@@ -51,15 +51,16 @@ Send a question to the in-app assistant. **Requires auth.**
 {
   "success": true,
   "reply": "Students can open the Exams page...",
-  "source": "openai",
+  "source": "nim",
   "suggestions": ["How do I log in?", "How do I start an exam?"]
 }
 ```
 
 **Optional environment variables:**
 ```bash
-OPENAI_API_KEY=your_key_here
-OPENAI_MODEL=gpt-4o-mini
+NVIDIA_NIM_API_KEY=your_key_here
+NVIDIA_NIM_MODEL=meta/llama-3.1-8b-instruct
+NVIDIA_NIM_BASE_URL=https://integrate.api.nvidia.com/v1/chat/completions
 ```
 
 ---

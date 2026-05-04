@@ -40,11 +40,12 @@ const buildLocalReply = (message, role) => {
   return 'I can help with login, exams, results, courses, and role-specific workflows. Try asking about one of those topics.';
 };
 
-const getOpenAIReply = async ({ message, role, history = [] }) => {
-  const apiKey = process.env.OPENAI_API_KEY;
+const getNimReply = async ({ message, role, history = [] }) => {
+  const apiKey = process.env.NVIDIA_NIM_API_KEY;
   if (!apiKey) return null;
 
-  const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
+  const model = process.env.NVIDIA_NIM_MODEL || 'meta/llama-3.1-8b-instruct';
+  const baseUrl = process.env.NVIDIA_NIM_BASE_URL || 'https://integrate.api.nvidia.com/v1/chat/completions';
   const messages = [
     {
       role: 'system',
@@ -64,7 +65,7 @@ const getOpenAIReply = async ({ message, role, history = [] }) => {
     { role: 'user', content: message },
   ];
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  const response = await fetch(baseUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -80,7 +81,7 @@ const getOpenAIReply = async ({ message, role, history = [] }) => {
 
   if (!response.ok) {
     const errorText = await response.text().catch(() => '');
-    throw new Error(`OpenAI request failed: ${response.status} ${errorText}`);
+    throw new Error(`NVIDIA NIM request failed: ${response.status} ${errorText}`);
   }
 
   const data = await response.json();
@@ -92,12 +93,12 @@ const sendMessage = async (req, res, next) => {
     const { message, history = [] } = req.body;
     const role = req.user?.role || 'guest';
 
-    const reply = (await getOpenAIReply({ message, role, history })) || buildLocalReply(message, role);
+    const reply = (await getNimReply({ message, role, history })) || buildLocalReply(message, role);
 
     res.json({
       success: true,
       reply,
-      source: process.env.OPENAI_API_KEY ? 'openai' : 'local',
+      source: process.env.NVIDIA_NIM_API_KEY ? 'nim' : 'local',
       suggestions: quickReplies,
     });
   } catch (error) {
